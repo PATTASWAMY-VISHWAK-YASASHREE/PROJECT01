@@ -15,6 +15,9 @@ The traffic light shows your CI/CD build status using three colored lights:
 - **Real-time Status**: Automatically checks build status every 30 seconds
 - **Manual Refresh**: Click the refresh button to check status immediately
 - **GitHub Actions Integration**: Uses GitHub Actions API to get workflow status
+- **Any Repository Support**: Works with any public GitHub repository - just enter the URL
+- **Multiple URL Formats**: Supports full GitHub URLs, shorthand owner/repo format
+- **Repository Persistence**: Remembers your repository selection between sessions
 - **Responsive Design**: Works on desktop and mobile devices
 - **Visual Feedback**: Animated lights with glow effects
 
@@ -27,19 +30,30 @@ The traffic light shows your CI/CD build status using three colored lights:
 
 ## 🔧 Setup
 
-1. **Enable GitHub Actions**: The workflow will run automatically on pushes and pull requests
-2. **Enable GitHub Pages** (optional): For hosting the traffic light web interface
+1. **Enter Repository URL**: In the GitHub Repository URL field, enter any public GitHub repository:
+   - Full URL: `https://github.com/owner/repository`
+   - Short format: `owner/repository`
+   - Git URL: `git@github.com:owner/repository.git`
+2. **Click "Set Repository"**: The traffic light will switch to monitor the new repository
+3. **Enable GitHub Actions**: The workflow will run automatically on pushes and pull requests (for the target repository)
+4. **Enable GitHub Pages** (optional): For hosting the traffic light web interface
    - Go to repository Settings → Pages
    - Select "GitHub Actions" as the source
-3. **Access the Traffic Light**: Open `index.html` in a web browser or visit your GitHub Pages URL
+5. **Access the Traffic Light**: Open `index.html` in a web browser or visit your GitHub Pages URL
 
 ## 🎯 Usage
 
 The traffic light will automatically:
-- Check the latest workflow run status
+- Check the latest workflow run status for the selected repository
 - Update the display based on build results
 - Refresh every 30 seconds
 - Show the last updated timestamp
+- Remember your repository selection between sessions
+
+### Changing Repositories
+1. Enter a new GitHub repository URL in the input field
+2. Click "Set Repository" or press Enter
+3. The traffic light will immediately switch to monitor the new repository
 
 ## 🛠️ Development
 
