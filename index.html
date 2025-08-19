@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Status Traffic Light</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Build Status Traffic Light</h1>
+        <div class="traffic-light">
+            <div class="light red" id="red-light"></div>
+            <div class="light yellow" id="yellow-light"></div>
+            <div class="light green" id="green-light"></div>
+        </div>
+        <div class="status-info">
+            <p id="status-text">Checking build status...</p>
+            <p id="last-updated">Last updated: <span id="timestamp">-</span></p>
+            <button id="refresh-btn">Refresh Status</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Build Status Traffic Light - Demo</h1>
+        <div class="traffic-light">
+            <div class="light red" id="red-light"></div>
+            <div class="light yellow" id="yellow-light"></div>
+            <div class="light green" id="green-light"></div>
+        </div>
+        <div class="status-info">
+            <p id="status-text">Demo Mode</p>
+            <p id="last-updated">Last updated: <span id="timestamp">-</span></p>
+            <div>
+                <button onclick="setDemoStatus('success')">✅ Success</button>
+                <button onclick="setDemoStatus('pending')">⏳ Pending</button>
+                <button onclick="setDemoStatus('failure')">❌ Failure</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function resetLights() {
+            document.getElementById('red-light').classList.remove('active');
+            document.getElementById('yellow-light').classList.remove('active');
+            document.getElementById('green-light').classList.remove('active');
+        }
+        
+        function setDemoStatus(status) {
+            resetLights();
+            const statusText = document.getElementById('status-text');
+            const timestamp = document.getElementById('timestamp');
+            
+            switch(status) {
+                case 'success':
+                    document.getElementById('green-light').classList.add('active');
+                    statusText.textContent = 'Build Passed ✅';
+                    statusText.style.color = '#44aa44';
+                    break;
+                case 'failure':
+                    document.getElementById('red-light').classList.add('active');
+                    statusText.textContent = 'Build Failed ❌';
+                    statusText.style.color = '#aa4444';
+                    break;
+                case 'pending':
+                    document.getElementById('yellow-light').classList.add('active');
+                    statusText.textContent = 'Build In Progress ⏳';
+                    statusText.style.color = '#aaaa44';
+                    break;
+            }
+            
+            timestamp.textContent = new Date().toLocaleString();
+        }
+        
+        // Start with success state
+        document.addEventListener('DOMContentLoaded', () => {
+            setDemoStatus('success');
+        });
+    </script>
+</body>
+</html>

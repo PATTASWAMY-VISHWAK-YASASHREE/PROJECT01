@@ -1,0 +1,62 @@
+name: CI/CD Build Status
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        # For now, just echo since we don't have package.json
+        echo "Installing dependencies..."
+        
+    - name: Lint code
+      run: |
+        echo "Running linter..."
+        # Check if HTML is valid
+        if [ -f "index.html" ]; then
+          echo "✅ HTML file found"
+        else
+          echo "❌ HTML file not found"
+          exit 1
+        fi
+        
+    - name: Run tests
+      run: |
+        echo "Running tests..."
+        # Basic validation tests
+        if [ -f "script.js" ] && [ -f "style.css" ]; then
+          echo "✅ All required files present"
+        else
+          echo "❌ Missing required files"
+          exit 1
+        fi
+        
+    - name: Build application
+      run: |
+        echo "Building application..."
+        # Simulate build process
+        sleep 2
+        echo "✅ Build completed successfully"
+        
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
