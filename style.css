@@ -81,6 +81,64 @@ h1 {
     box-shadow: 0 0 20px #44ff44, inset 0 0 20px rgba(68, 255, 68, 0.5);
 }
 
+.repo-config {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.repo-config label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+.repo-config input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.repo-config input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.repo-config button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.repo-config button:hover {
+    background: #5a6fd8;
+}
+
+.repo-config button:active {
+    transform: translateY(1px);
+}
+
+.repo-config button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.repo-config button:disabled:hover {
+    background: #ccc;
+}
+
 .status-info {
     margin-top: 30px;
 }

@@ -6,8 +6,10 @@ class TrafficLight {
         this.statusText = document.getElementById('status-text');
         this.timestamp = document.getElementById('timestamp');
         this.refreshBtn = document.getElementById('refresh-btn');
+        this.repoUrlInput = document.getElementById('repo-url');
+        this.setRepoBtn = document.getElementById('set-repo-btn');
         
-        // GitHub repository information
+        // GitHub repository information (defaults)
         this.owner = 'PATTASWAMY-VISHWAK-YASASHREE';
         this.repo = 'PROJECT01';
         
@@ -16,10 +18,84 @@ class TrafficLight {
     
     init() {
         this.refreshBtn.addEventListener('click', () => this.checkBuildStatus());
+        this.setRepoBtn.addEventListener('click', () => this.setRepository());
+        this.repoUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.setRepository();
+            }
+        });
+        
+        // Load saved repository from localStorage
+        this.loadSavedRepository();
+        
         this.checkBuildStatus();
         
         // Auto-refresh every 30 seconds
         setInterval(() => this.checkBuildStatus(), 30000);
+    }
+    
+    parseGitHubUrl(url) {
+        // Support various GitHub URL formats
+        const patterns = [
+            // https://github.com/owner/repo
+            /^https?:\/\/github\.com\/([^\/]+)\/([^\/]+?)(\.git)?(\?.*)?$/,
+            // git@github.com:owner/repo.git
+            /^git@github\.com:([^\/]+)\/([^\/]+?)\.git$/,
+            // owner/repo shorthand
+            /^([^\/]+)\/([^\/]+)$/
+        ];
+        
+        for (const pattern of patterns) {
+            const match = url.trim().match(pattern);
+            if (match) {
+                return {
+                    owner: match[1],
+                    repo: match[2]
+                };
+            }
+        }
+        
+        return null;
+    }
+    
+    setRepository() {
+        const url = this.repoUrlInput.value.trim();
+        if (!url) {
+            this.setStatus('error', 'Please enter a GitHub repository URL');
+            return;
+        }
+        
+        const parsed = this.parseGitHubUrl(url);
+        if (!parsed) {
+            this.setStatus('error', 'Invalid GitHub repository URL format');
+            return;
+        }
+        
+        this.owner = parsed.owner;
+        this.repo = parsed.repo;
+        
+        // Save to localStorage
+        localStorage.setItem('github-repo-url', url);
+        localStorage.setItem('github-owner', this.owner);
+        localStorage.setItem('github-repo', this.repo);
+        
+        this.setStatus('pending', `Switched to ${this.owner}/${this.repo}`);
+        this.checkBuildStatus();
+    }
+    
+    loadSavedRepository() {
+        const savedUrl = localStorage.getItem('github-repo-url');
+        const savedOwner = localStorage.getItem('github-owner');
+        const savedRepo = localStorage.getItem('github-repo');
+        
+        if (savedUrl && savedOwner && savedRepo) {
+            this.repoUrlInput.value = savedUrl;
+            this.owner = savedOwner;
+            this.repo = savedRepo;
+        } else {
+            // Set default URL in input
+            this.repoUrlInput.value = `https://github.com/${this.owner}/${this.repo}`;
+        }
     }
     
     resetLights() {
